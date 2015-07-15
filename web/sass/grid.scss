@@ -1,0 +1,117 @@
+//
+// Fix for fixed positioning grid
+//
+
+.ggs-guide,
+#ggs-baseline-container {
+    position: fixed !important;
+}
+
+/*
+*
+*  Golden Grid System (1.0) <http://goldengridsystem.com/>
+*  by Joni Korpi                <http://jonikorpi.com/>
+*  licensed under MIT           <http://opensource.org/licenses/mit-license.php>
+*
+*/
+
+//
+// Important numbers
+//
+
+$line: 24;
+$column: 100% / 18;
+$em: 16;
+$margin: 5.55555%;
+
+/*
+*
+*  Simple fluid media
+*
+*/
+
+figure {
+    position: relative;
+}
+
+figure img, figure object, figure embed, figure video {
+    max-width: 100%;
+    display: block;
+}
+
+img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+}
+
+/*
+*  Simple elastic gutters
+*  Note: box-sizing will not work in IE6-7
+*/
+
+.center {
+    padding: 0 12px;
+    margin: 0 ($column * 1 + $margin);
+}
+
+/*
+*
+*  Sixteen-column grid active
+*  ----------------------------------------------------------------------------------------------------------------------
+*  Margin   | #  1     2     3     4     5     6     7     8     9     10    11    12    13    14    15    16  |   Margin
+*  5.55555% | %  6.25  12.5  18.75 25.0  31.25 37.5  43.75 50.0  56.25 62.5  68.75 75.0  81.25 87.5  93.75 100 | 5.55555%
+*
+*
+*/
+
+@media screen and (min-width: 2080px) {
+}
+
+@media screen and (max-width: 2079px) {
+}
+
+/*
+*
+*  Eight-column grid active
+*  ----------------------------------------------------------------------
+*  Margin   | #  1     2     3     4     5     6     7     8   |   Margin
+*  5.55555% | %  12.5  25.0  37.5  50.0  62.5  75.0  87.5  100 | 5.55555%
+*
+*
+*/
+
+@media screen and (max-width: 1871px) {
+    .center {
+        margin: 0 ($column * 2 + $margin);
+    }
+}
+
+@media screen and (max-width: 1679px) {
+}
+
+@media screen and (max-width: 1391px) {
+}
+
+@media screen and (max-width: 1199px) {
+}
+
+@media screen and (max-width: 983px) {
+}
+
+@media screen and (max-width: 887px) {
+    .center {
+        margin: 0 $margin;
+    }
+}
+
+/*
+*
+*  Four-column grid active
+*  ----------------------------------------
+*  Margin   | #  1   2   3   4   |   Margin
+*  5.55555% | %  25  50  75  100 | 5.55555%
+*
+*/
+
+@media screen and (max-width: 719px) {
+}
