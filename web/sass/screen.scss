@@ -43,45 +43,44 @@ body {
     overflow-y: scroll;
 }
 
-// share
-
-.share {
-    margin: 20px 0;
-    width: 100%;
-    display: inline-block;
-    clear: both;
-
-    .fb {
-        float: left;
-        margin: 0 10px 0 0;
-    }
-
-    .tw {
-        float: left;
-        margin: 0 10px 0 0;
-    }
-
-    .gp {
-        float: left;
-    }
-}
-
 // fitvids
 
 .fit-video {
     width: 100%;
 }
 
+// custom colors
+
+$background: #ffffff;
+$accent: #ffff00;
+$light: #eeecef;
+
 // custom
 
 ::-moz-selection {
-    background: #000;
-    color: #fff;
+    background: $accent;
+    color: $light;
 }
 
 ::selection {
-    background: #000;
-    color: #fff;
+    background: $accent;
+    color: $light;
+}
+
+body {
+    background: $background;
+    font-family: 'Inconsolata', monospace;
+
+    a {
+        color: $accent;
+        text-decoration: none;
+    }
+}
+
+// header
+
+.logo {
+    font-size: 200px;
 }
 
 // imports
