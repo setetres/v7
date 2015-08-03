@@ -28,7 +28,8 @@
     "fitvids": "~1.1.0",
     "jquery-smartresize": "*",
     "golden-grid-system": "*",
-    "normalize-css": "~3.0.3"
+    "normalize-css": "~3.0.3",
+    "jquery-mousewheel": "~3.1.13"
   },
   "overrides": {
     "golden-grid-system": {
