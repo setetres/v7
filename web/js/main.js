@@ -49,6 +49,10 @@ $(document).ready(function() {
         for (var i = 2 - glitchID.toString().length; i >= 0; i--) {
             filename = '0' + filename;
         }
+        $('*').addClass('glitch');
+        setTimeout(function(){
+            $('*').removeClass('glitch');
+        },150);
         $('#glitch source').remove();
         $('#glitch')[0].src = 'mp3/GL1-'+ filename +'.mp3';
         $('#glitch')[0].play();
