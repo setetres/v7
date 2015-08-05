@@ -45,8 +45,12 @@ $(document).ready(function() {
 
     $('body').on('click', function() {
         var glitchID = Math.floor((Math.random() * 255) + 1);
+        var filename = glitchID.toString();
+        for (var i = 2 - glitchID.toString().length; i >= 0; i--) {
+            filename = '0' + filename;
+        }
         $('#glitch source').remove();
-        $('#glitch')[0].src = 'mp3/GL1-'+ glitchID +'.mp3';
+        $('#glitch')[0].src = 'mp3/GL1-'+ filename +'.mp3';
         $('#glitch')[0].play();
     });
 
@@ -56,51 +60,30 @@ $(document).ready(function() {
 
     var getMax = function(){
         return $(document).height() - $(window).height();
-    }
+    };
 
     var getValue = function(){
         return $(window).scrollTop();
-    }
+    };
 
-    if('max' in document.createElement('progress')){
-        // Browser supports progress element
-        var progressBar = $('progress');
+    var progressBar = $('.progress-bar'),
+        max = getMax(),
+        value, width;
 
-        // Set the Max attr for the first time
-        progressBar.attr({ max: getMax() });
+    var getWidth = function(){
+        value = getValue();
+        width = (value/max) * 100;
+        width = width + '%';
+        return width;
+    };
 
-        $(document).on('scroll', function(){
-            // On scroll only Value attr needs to be calculated
-            progressBar.attr({ value: getValue() });
-        });
+    var setWidth = function(){
+        progressBar.css({ width: getWidth() });
+    };
 
-        $(window).resize(function(){
-            // On resize, both Max/Value attr needs to be calculated
-            progressBar.attr({ max: getMax(), value: getValue() });
-        });
-    }
-    else {
-        var progressBar = $('.progress-bar'),
-            max = getMax(),
-            value, width;
-
-        var getWidth = function(){
-            // Calculate width in percentage
-            value = getValue();
-            width = (value/max) * 100;
-            width = width + '%';
-            return width;
-        }
-
-        var setWidth = function(){
-            progressBar.css({ width: getWidth() });
-        }
-
-        $(document).on('scroll', setWidth);
-        $(window).on('resize', function(){
-            // Need to reset the Max attr
-            max = getMax();
-            setWidth();
-        });
-    }
+    $(document).on('scroll', setWidth);
+    $(window).on('resize', function(){
+        max = getMax();
+        setWidth();
+    });
 });
