@@ -49,7 +49,8 @@ body {
 
 $background: #15191d;
 $accent: #4b538b;
-$light: #eeecef;
+$accent2: #7ec8b9;
+$light: #c9d1d3;
 
 // custom
 
@@ -65,14 +66,17 @@ $light: #eeecef;
 
 body {
     background: $background;
-    color: #C9D1D3;
+    color: $light;
     font-family: 'Inconsolata', monospace;
-
-    font-size: 13px;
+    font-size: 14px;
 
     a {
         color: $accent;
         text-decoration: none;
+
+        &:hover {
+            color: $accent2;
+        }
     }
 }
 
@@ -85,6 +89,7 @@ header {
 
     .logo {
         font-size: 73px;
+        line-height: 73px;
         letter-spacing: -4px;
         font-weight: normal;
         font-style: italic;
@@ -106,11 +111,31 @@ header {
             float: left;
             width: 100%;
             background: $background;
-            background: lighten($background,3%);
+            background: lighten($background, 3%);
+            overflow: hidden;
         }
 
         &#home {
             position: fixed;
+        }
+    }
+
+    h2 {
+        font-size: 73px;
+        line-height: 73px;
+        letter-spacing: -4px;
+        font-weight: normal;
+        font-style: italic;
+        margin-bottom: 0;
+        background: url(../img/zigzag.png) 0 center;
+
+        a {
+            color: $background;
+        }
+
+        &:hover {
+            -webkit-animation: zigzag 100ms linear infinite;
+            animation: zigzag 100ms linear infinite;
         }
     }
 }
@@ -121,7 +146,7 @@ footer {
     float: left;
     width: 100%;
     position: relative;
-    background: lighten($background,5%);
+    background: lighten($background, 5%);
     overflow: hidden;
 }
 
@@ -135,23 +160,23 @@ progress {
     width: 100%;
     height: .25em;
     -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     border: none;
     background-color: transparent;
-    color: red;
-}
+    color: $accent2;
 
-progress::-webkit-progress-bar {
-    background-color: transparent;
-}
+    &::-webkit-progress-bar {
+        background-color: transparent;
+    }
 
-.flat::-webkit-progress-value {
-    background-color: #F7A21B;
-}
+    &::-webkit-progress-value {
+        background-color: $accent2;
+    }
 
-.flat::-moz-progress-bar {
-    background-color: #F7A21B;
+    &::-moz-progress-bar {
+        background-color: $accent2;
+    }
 }
 
 .progress-container {
@@ -169,6 +194,16 @@ progress::-webkit-progress-bar {
     width: 50%;
     display: block;
     height: inherit;
+}
+
+@-webkit-keyframes zigzag {
+  0%   {background-position: 0 center;}
+  100% {background-position: 7px center;}
+}
+
+@keyframes zigzag {
+  0%   {background-position: 0 center;}
+  100% {background-position: 7px center;}
 }
 
 // imports
