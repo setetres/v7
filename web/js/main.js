@@ -29,6 +29,8 @@ $(document).ready(function() {
             setTimeout(function(){
                 $('.description').html(randomLanguage[2]).css({transform: 'perspective(1000px) rotateX('+rotateDegree+'deg)'});
             },200);
+            $('#soundtrack')[0].pause();
+            $('#soundtrack-up')[0].play();
         } else if(event.deltaY > 0 && $(window).scrollTop() === 0){
             randomLanguage = contentTranslate[Math.floor((Math.random() * contentTranslate.length))];
             $(window).scrollTop($(document).height() - window.innerHeight);
@@ -38,8 +40,13 @@ $(document).ready(function() {
             setTimeout(function(){
                 $('.description').html(randomLanguage[2]).css({transform: 'perspective(1000px) rotateX('+rotateDegree+'deg)'});
             },200);
+            $('#soundtrack')[0].play();
+            $('#soundtrack-up')[0].pause();
+
         }
     });
+
+    $('#soundtrack')[0].play();
 
     // glitch
 
