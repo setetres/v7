@@ -47,10 +47,8 @@ body {
 
 // custom colors
 
-// $background: #030D4F;
-// $accent: #FB0C06;
-$background: #15191D;
-$accent: #4B538B;
+$background: #15191d;
+$accent: #4b538b;
 $light: #eeecef;
 
 // custom
@@ -102,6 +100,7 @@ header {
         width: 100%;
         height: 100%;
         position: relative;
+        overflow: hidden;
 
         .tile {
             float: left;
@@ -121,9 +120,9 @@ header {
 footer {
     float: left;
     width: 100%;
-    height: 100%;
     position: relative;
     background: lighten($background,5%);
+    overflow: hidden;
 }
 
 // imports

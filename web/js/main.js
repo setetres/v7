@@ -6,7 +6,7 @@ $(document).ready(function() {
     // set sizes
 
     function setSizes() {
-        $('.row, footer').css({height: window.innerHeight});
+        $('#home, footer').css({height: window.innerHeight});
         $('#content').css({top: window.innerHeight});
         $('footer').css({marginBottom: window.innerHeight});
     }
