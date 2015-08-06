@@ -20,6 +20,13 @@ $(document).ready(function() {
     // mousewheel
 
     $('body').on('mousewheel', function(event) {
+        // if(event.deltaY > 0){
+        //     $('#soundtrack')[0].play();
+        //     $('#soundtrack-up')[0].pause();
+        // } else {
+        //     $('#soundtrack')[0].pause();
+        //     $('#soundtrack-up')[0].play();
+        // }
         if(event.deltaY < 0 && $(window).scrollTop() + window.innerHeight === $(document).height()){
             randomLanguage = contentTranslate[Math.floor((Math.random() * contentTranslate.length))];
             $(window).scrollTop(0);
@@ -29,8 +36,6 @@ $(document).ready(function() {
             setTimeout(function(){
                 $('.description').html(randomLanguage[2]).css({transform: 'perspective(1000px) rotateX('+rotateDegree+'deg)'});
             },200);
-            $('#soundtrack')[0].pause();
-            $('#soundtrack-up')[0].play();
         } else if(event.deltaY > 0 && $(window).scrollTop() === 0){
             randomLanguage = contentTranslate[Math.floor((Math.random() * contentTranslate.length))];
             $(window).scrollTop($(document).height() - window.innerHeight);
@@ -40,13 +45,8 @@ $(document).ready(function() {
             setTimeout(function(){
                 $('.description').html(randomLanguage[2]).css({transform: 'perspective(1000px) rotateX('+rotateDegree+'deg)'});
             },200);
-            $('#soundtrack')[0].play();
-            $('#soundtrack-up')[0].pause();
-
         }
     });
-
-    $('#soundtrack')[0].play();
 
     // glitch
 
@@ -56,10 +56,10 @@ $(document).ready(function() {
         for (var i = 2 - glitchID.toString().length; i >= 0; i--) {
             filename = '0' + filename;
         }
-        $('*').addClass('glitch');
-        setTimeout(function(){
-            $('*').removeClass('glitch');
-        },150);
+        // $('*').addClass('glitch');
+        // setTimeout(function(){
+        //     $('*').removeClass('glitch');
+        // },150);
         $('#glitch source').remove();
         $('#glitch')[0].src = 'mp3/GL1-'+ filename +'.mp3';
         $('#glitch')[0].play();

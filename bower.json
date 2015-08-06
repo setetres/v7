@@ -29,7 +29,8 @@
     "jquery-smartresize": "*",
     "golden-grid-system": "*",
     "normalize-css": "~3.0.3",
-    "jquery-mousewheel": "~3.1.13"
+    "jquery-mousewheel": "~3.1.13",
+    "three.js": "~0.71.0"
   },
   "overrides": {
     "golden-grid-system": {

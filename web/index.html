@@ -32,35 +32,28 @@
         <link rel="stylesheet" href="css/vendor.css"/>
         <link rel="stylesheet" href="css/screen.css"/>
 
+        <style>
+            #stats { position: absolute; top:0; left: 0; z-index: 100 !important; }
+        </style>
+
         <script src="js/vendor/modernizr.js"></script>
     </head>
     <body>
-        <div class="progress-container"><span class="progress-bar"></span></div>
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
         <audio id="glitch" preload="auto">
             <source src="" type="audio/mpeg">
-        </audio>
-        <audio id="soundtrack" preload="auto" loop>
-            <source src="../mp3/TR-1.mp3" type="audio/mpeg">
-        </audio>
-        <audio id="soundtrack-up" preload="auto" loop>
-            <source src="../mp3/TR-2.mp3" type="audio/mpeg">
         </audio>
         <header>
             <div class="center">
                 <h1 class="logo title"><a href="/">Hello.</a></h1>
                 <p class="description">My name is Guilherme Pangnotta.<br/>I'm a web developer and web designer from Belo Horizonte, Brazil.</p>
-                <!-- <nav role="navigation">
-                    <ul>
-                        <li><a href="#">Item #1</a></li>
-                        <li><a href="#">Item #2</a></li>
-                        <li><a href="#">Item #3</a></li>
-                    </ul>
-                </nav> -->
             </div>
         </header>
         <div id="main" role="main" class="main">
             <div class="row" id="home">
-                HOME
+                <div id="container"></div>
             </div>
             <div class="row" id="content">
                 <div class="tile">
@@ -148,6 +141,257 @@
             ga('create', 'UA-6977973-1', 'auto');
             ga('send', 'pageview');
 
+        </script>
+
+        <!-- three.js -->
+
+        <script src="/three/controls/OrbitControls.js"></script>
+        <script src="/three/shaders/CopyShader.js"></script>
+        <script src="/three/shaders/FXAAShader.js"></script>
+        <script src="/three/shaders/HorizontalTiltShiftShader.js"></script>
+        <script src="/three/shaders/VerticalTiltShiftShader.js"></script>
+        <script src="/three/postprocessing/EffectComposer.js"></script>
+        <script src="/three/postprocessing/RenderPass.js"></script>
+        <script src="/three/postprocessing/ShaderPass.js"></script>
+        <script src="/three/MarchingCubes.js"></script>
+        <script src="/three/ShaderToon.js"></script>
+        <script src="/three/Detector.js"></script>
+        <script src="/three/libs/stats.min.js"></script>
+        <script src="/three/libs/dat.gui.min.js"></script>
+        <script>
+            if (! Detector.webgl) Detector.addGetWebGLMessage();
+            var MARGIN = 0;
+            var SCREEN_WIDTH = window.innerWidth;
+            var SCREEN_HEIGHT = window.innerHeight;
+            var container, stats;
+            var camera, scene, renderer;
+            var materials, material, current_material;
+            var light, pointLight, ambientLight;
+            var effect, resolution, numBlobs;
+            var composer, effectFXAA, hblur, vblur;
+            var effectController;
+            var time = 0;
+            var clock = new THREE.Clock();
+            init();
+            animate();
+
+            function init() {
+                container = document.getElementById('container');
+                // CAMERA
+                camera = new THREE.PerspectiveCamera(45, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000);
+                camera.position.set(-500, 500, 1500);
+                // SCENE
+                scene = new THREE.Scene();
+                // LIGHTS
+                light = new THREE.DirectionalLight(0xffffff);
+                light.position.set(0.5, 0.5, 1);
+                scene.add(light);
+                ambientLight = new THREE.AmbientLight(0x080808);
+                scene.add(ambientLight);
+                // MATERIALS
+                materials = generateMaterials();
+                current_material = "hatching";
+                // MARCHING CUBES
+                resolution = 28;
+                numBlobs = 10;
+                effect = new THREE.MarchingCubes(resolution, materials[ current_material ].m, true, true);
+                effect.position.set(0, 0, 0);
+                effect.scale.set(700, 700, 700);
+                effect.enableUvs = false;
+                effect.enableColors = false;
+                scene.add(effect);
+                // RENDERER
+                renderer = new THREE.WebGLRenderer();
+                renderer.setClearColor(0x15191d);
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+                renderer.domElement.style.position = "absolute";
+                renderer.domElement.style.top = MARGIN + "px";
+                renderer.domElement.style.left = "0px";
+                container.appendChild(renderer.domElement);
+                //
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                // CONTROLS
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.noZoom = true;
+                // STATS
+                stats = new Stats();
+                container.appendChild(stats.domElement);
+                // COMPOSER
+                renderer.autoClear = false;
+                var renderTargetParameters = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat, stencilBuffer: false };
+                renderTarget = new THREE.WebGLRenderTarget(SCREEN_WIDTH, SCREEN_HEIGHT, renderTargetParameters);
+                effectFXAA = new THREE.ShaderPass(THREE.FXAAShader);
+                hblur = new THREE.ShaderPass(THREE.HorizontalTiltShiftShader);
+                vblur = new THREE.ShaderPass(THREE.VerticalTiltShiftShader);
+                var bluriness = 8;
+                hblur.uniforms[ 'h' ].value = bluriness / SCREEN_WIDTH;
+                vblur.uniforms[ 'v' ].value = bluriness / SCREEN_HEIGHT;
+                hblur.uniforms[ 'r' ].value = vblur.uniforms[ 'r' ].value = 0.5;
+                effectFXAA.uniforms[ 'resolution' ].value.set(1 / SCREEN_WIDTH, 1 / SCREEN_HEIGHT);
+                composer = new THREE.EffectComposer(renderer, renderTarget);
+                var renderModel = new THREE.RenderPass(scene, camera);
+                vblur.renderToScreen = true;
+                //effectFXAA.renderToScreen = true;
+                composer = new THREE.EffectComposer(renderer, renderTarget);
+                composer.addPass(renderModel);
+                composer.addPass(effectFXAA);
+                composer.addPass(hblur);
+                composer.addPass(vblur);
+                // GUI
+                setupGui();
+                // EVENTS
+                window.addEventListener('resize', onWindowResize, false);
+            }
+
+            function onWindowResize(event) {
+                SCREEN_WIDTH = window.innerWidth;
+                SCREEN_HEIGHT = window.innerHeight - 2 * MARGIN;
+                camera.aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
+                camera.updateProjectionMatrix();
+                renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+                composer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+                hblur.uniforms[ 'h' ].value = 4 / SCREEN_WIDTH;
+                vblur.uniforms[ 'v' ].value = 4 / SCREEN_HEIGHT;
+                effectFXAA.uniforms[ 'resolution' ].value.set(1 / SCREEN_WIDTH, 1 / SCREEN_HEIGHT);
+            }
+
+            function generateMaterials() {
+                // toons
+                var hatchingMaterial = createShaderMaterial("hatching", light, ambientLight);
+
+                var materials = {
+                    "hatching" :
+                    {
+                        m: hatchingMaterial,
+                        h: 0.2, s: 1, l: 0.9
+                    }
+                };
+                return materials;
+            }
+
+            function createShaderMaterial(id, light, ambientLight) {
+                var shader = THREE.ShaderToon[ id ];
+                var u = THREE.UniformsUtils.clone(shader.uniforms);
+                var vs = shader.vertexShader;
+                var fs = shader.fragmentShader;
+                var material = new THREE.ShaderMaterial({ uniforms: u, vertexShader: vs, fragmentShader: fs });
+                material.uniforms.uDirLightPos.value = light.position;
+                material.uniforms.uDirLightColor.value = light.color;
+                material.uniforms.uAmbientLightColor.value = ambientLight.color;
+                return material;
+            }
+
+            function setupGui() {
+                var createHandler = function(id) {
+                    return function() {
+                        var mat_old = materials[ current_material ];
+                        mat_old.h = m_h.getValue();
+                        mat_old.s = m_s.getValue();
+                        mat_old.l = m_l.getValue();
+                        current_material = id;
+                        var mat = materials[ id ];
+                        effect.material = mat.m;
+                        m_h.setValue(mat.h);
+                        m_s.setValue(mat.s);
+                        m_l.setValue(mat.l);
+                        if (current_material === "colors") {
+                            effect.enableColors = true;
+                        } else {
+                            effect.enableColors = false;
+                        }
+                    };
+                };
+
+                effectController = {
+                    speed: 0.73,
+                    numBlobs: 27,
+                    resolution: 27,
+                    isolation: 73,
+                    hex: '0x4b538b',
+                    lhue: 0.04,
+                    lsaturation: 1.0,
+                    llightness: 0.5,
+                    lx: -1,
+                    ly: 1,
+                    lz: 1,
+                    postprocessing: false,
+                    dummy: function() {
+                    }
+                };
+
+                var h, m_h;
+                var gui = new dat.GUI();
+                // material (type)
+                h = gui.addFolder("Materials");
+                for (var m in materials) {
+                    effectController[ m ] = createHandler(m);
+                    h.add(effectController, m).name(m);
+                }
+                // material (color)
+                h = gui.addFolder("Material color");
+                m_h = h.add(effectController, "hex", '0x4b538b');
+                // light (directional)
+                h = gui.addFolder("Directional light orientation");
+                h.add(effectController, "lx", -1.0, 1.0, 0.025).name("x");
+                h.add(effectController, "ly", -1.0, 1.0, 0.025).name("y");
+                h.add(effectController, "lz", -1.0, 1.0, 0.025).name("z");
+                // simulation
+                h = gui.addFolder("Simulation");
+                h.add(effectController, "speed", 0.1, 8.0, 0.05);
+                h.add(effectController, "numBlobs", 1, 50, 1);
+                h.add(effectController, "resolution", 14, 40, 1);
+                h.add(effectController, "isolation", 10, 300, 1);
+            }
+
+            // this controls content of marching cubes voxel field
+            function updateCubes(object, time, numblobs) {
+                object.reset();
+                // fill the field with some metaballs
+                var i, ballx, bally, ballz, subtract, strength;
+                subtract = 12;
+                strength = 1.2 / ((Math.sqrt(numblobs) - 1) / 4 + 1);
+                for (i = 0; i < numblobs; i ++) {
+                    ballx = Math.sin(i + 1.26 * time * (1.03 + 0.5 * Math.cos(0.21 * i))) * 0.27 + 0.5;
+                    bally = Math.abs(Math.cos(i + 1.12 * time * Math.cos(1.22 + 0.1424 * i))) * 0.77; // dip into the floor
+                    ballz = Math.cos(i + 1.32 * time * 0.1 * Math.sin((0.92 + 0.53 * i))) * 0.27 + 0.5;
+                    object.addBall(ballx, bally, ballz, strength, subtract);
+                }
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                render();
+                stats.update();
+            }
+
+            function render(){
+                var delta = clock.getDelta();
+                time += delta * effectController.speed * 0.5;
+                //controls.update(delta);
+                // marching cubes
+                if (effectController.resolution !== resolution) {
+                    resolution = effectController.resolution;
+                    effect.init(resolution);
+                }
+                if (effectController.isolation !== effect.isolation) {
+                    effect.isolation = effectController.isolation;
+                }
+                updateCubes(effect, time, effectController.numBlobs);
+                // materials
+                if (effect.material instanceof THREE.ShaderMaterial) {
+                    effect.material.uniforms.uBaseColor.value.setHex(effectController.hex);
+                } else {
+                    effect.material.color.setHex(effectController.hex);
+                }
+                // lights
+                light.position.set(effectController.lx, effectController.ly, effectController.lz);
+                light.position.normalize();
+                // render
+                renderer.clear();
+                renderer.render(scene, camera);
+            }
         </script>
     </body>
 </html>
