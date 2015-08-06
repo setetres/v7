@@ -84,7 +84,7 @@ body {
 
 header {
     position: fixed;
-    z-index: 2;
+    z-index: 3;
     top: 0;
     pointer-events: none;
 
@@ -116,6 +116,11 @@ header {
 
         &#home {
             position: fixed;
+            z-index: 2;
+        }
+
+        &#content {
+            z-index: 3;
         }
     }
 
@@ -169,6 +174,10 @@ footer {
     width: 100%;
     position: relative;
     overflow: hidden;
+
+    p {
+        margin: 0;
+    }
 }
 
 // progress
@@ -182,11 +191,11 @@ footer {
     height: 100%;
     display: block;
     opacity: 0.9;
-    z-index: 2;
+    z-index: 1;
     pointer-events: none;
 
     .progress-bar {
-        background-color: lighten($background, 2%);
+        background-color: lighten($background, 3%);
         width: 0%;
         display: block;
         height: 100%;

@@ -8,7 +8,6 @@ $(document).ready(function() {
     function setSizes() {
         $('#home, footer').css({height: window.innerHeight});
         $('#content').css({top: window.innerHeight});
-        $('footer').css({marginBottom: window.innerHeight});
     }
 
     // window resize
