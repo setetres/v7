@@ -45,6 +45,7 @@
             <div class="center">
                 <h1 class="logo title"><a href="/">Hello.</a></h1>
                 <p class="description">My name is Guilherme Pangnotta.<br/>I'm a web developer and web designer from Belo Horizonte, Brazil.</p>
+                <p>↕ scroll / <a href="http://setetres.st/resume" rel="external">📃 résumé</a></p>
             </div>
         </header>
         <div id="main" role="main" class="main">
@@ -142,25 +143,37 @@
         <script src="/three/Detector.js"></script>
         <script>
             if (! Detector.webgl) Detector.addGetWebGLMessage();
-            var MARGIN = 0;
-            var SCREEN_WIDTH = window.innerWidth;
-            var SCREEN_HEIGHT = window.innerHeight;
-            var container;
-            var camera, scene, renderer;
-            var materials, material, current_material;
-            var light, pointLight, ambientLight;
-            var effect, resolution, numBlobs;
-            var composer, effectFXAA, hblur, vblur;
-            var effectController;
+            var margin = 0;
             var time = 0;
+            var screenWidth = window.innerWidth;
+            var screenHeight = window.innerHeight;
             var clock = new THREE.Clock();
+            var ambientLight,
+                camera,
+                composer,
+                container,
+                current_material,
+                effect,
+                effectController,
+                hblur,
+                light,
+                material,
+                materials,
+                numBlobs,
+                pointLight,
+                renderer,
+                resolution,
+                scene,
+                effectFXAA,
+                vblur;
+
             init();
             animate();
 
             function init() {
                 container = document.getElementById('container');
                 // CAMERA
-                camera = new THREE.PerspectiveCamera(45, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000);
+                camera = new THREE.PerspectiveCamera(45, screenWidth / screenHeight, 1, 10000);
                 camera.position.set(-500, 500, 1500);
                 // SCENE
                 scene = new THREE.Scene();
@@ -186,9 +199,9 @@
                 renderer = new THREE.WebGLRenderer({alpha: true});
                 renderer.setClearColor(0x15191d, 0);
                 renderer.setPixelRatio(window.devicePixelRatio);
-                renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+                renderer.setSize(screenWidth, screenHeight);
                 renderer.domElement.style.position = "absolute";
-                renderer.domElement.style.top = MARGIN + "px";
+                renderer.domElement.style.top = margin + "px";
                 renderer.domElement.style.left = "0px";
                 container.appendChild(renderer.domElement);
                 //
@@ -200,15 +213,15 @@
                 // COMPOSER
                 renderer.autoClear = false;
                 var renderTargetParameters = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat, stencilBuffer: false };
-                renderTarget = new THREE.WebGLRenderTarget(SCREEN_WIDTH, SCREEN_HEIGHT, renderTargetParameters);
+                renderTarget = new THREE.WebGLRenderTarget(screenWidth, screenHeight, renderTargetParameters);
                 effectFXAA = new THREE.ShaderPass(THREE.FXAAShader);
                 hblur = new THREE.ShaderPass(THREE.HorizontalTiltShiftShader);
                 vblur = new THREE.ShaderPass(THREE.VerticalTiltShiftShader);
                 var bluriness = 8;
-                hblur.uniforms[ 'h' ].value = bluriness / SCREEN_WIDTH;
-                vblur.uniforms[ 'v' ].value = bluriness / SCREEN_HEIGHT;
+                hblur.uniforms[ 'h' ].value = bluriness / screenWidth;
+                vblur.uniforms[ 'v' ].value = bluriness / screenHeight;
                 hblur.uniforms[ 'r' ].value = vblur.uniforms[ 'r' ].value = 0.5;
-                effectFXAA.uniforms[ 'resolution' ].value.set(1 / SCREEN_WIDTH, 1 / SCREEN_HEIGHT);
+                effectFXAA.uniforms[ 'resolution' ].value.set(1 / screenWidth, 1 / screenHeight);
                 composer = new THREE.EffectComposer(renderer, renderTarget);
                 var renderModel = new THREE.RenderPass(scene, camera);
                 vblur.renderToScreen = true;
@@ -225,15 +238,15 @@
             }
 
             function onWindowResize(event) {
-                SCREEN_WIDTH = window.innerWidth;
-                SCREEN_HEIGHT = window.innerHeight - 2 * MARGIN;
-                camera.aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
+                screenWidth = window.innerWidth;
+                screenHeight = window.innerHeight - 2 * margin;
+                camera.aspect = screenWidth / screenHeight;
                 camera.updateProjectionMatrix();
-                renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-                composer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-                hblur.uniforms[ 'h' ].value = 4 / SCREEN_WIDTH;
-                vblur.uniforms[ 'v' ].value = 4 / SCREEN_HEIGHT;
-                effectFXAA.uniforms[ 'resolution' ].value.set(1 / SCREEN_WIDTH, 1 / SCREEN_HEIGHT);
+                renderer.setSize(screenWidth, screenHeight);
+                composer.setSize(screenWidth, screenHeight);
+                hblur.uniforms[ 'h' ].value = 4 / screenWidth;
+                vblur.uniforms[ 'v' ].value = 4 / screenHeight;
+                effectFXAA.uniforms[ 'resolution' ].value.set(1 / screenWidth, 1 / screenHeight);
             }
 
             function generateMaterials() {
@@ -263,25 +276,6 @@
             }
 
             function setupGui() {
-                var createHandler = function(id) {
-                    return function() {
-                        var mat_old = materials[ current_material ];
-                        mat_old.h = m_h.getValue();
-                        mat_old.s = m_s.getValue();
-                        mat_old.l = m_l.getValue();
-                        current_material = id;
-                        var mat = materials[ id ];
-                        effect.material = mat.m;
-                        m_h.setValue(mat.h);
-                        m_s.setValue(mat.s);
-                        m_l.setValue(mat.l);
-                        if (current_material === "colors") {
-                            effect.enableColors = true;
-                        } else {
-                            effect.enableColors = false;
-                        }
-                    };
-                };
 
                 effectController = {
                     speed: 0.73,
@@ -324,7 +318,6 @@
             function render(){
                 var delta = clock.getDelta();
                 time += delta * effectController.speed * 0.5;
-                //controls.update(delta);
                 // marching cubes
                 if (effectController.resolution !== resolution) {
                     resolution = effectController.resolution;
