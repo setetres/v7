@@ -24,6 +24,7 @@ button {
 
 * {
     box-sizing: border-box;
+    user-select: none;
 }
 
 header,
@@ -69,6 +70,7 @@ body {
     color: $light;
     font-family: 'Inconsolata', monospace;
     font-size: 14px;
+    cursor: default;
 
     a {
         color: $accent;
@@ -117,6 +119,7 @@ header {
         &#home {
             position: fixed;
             z-index: 2;
+            pointer-events: none;
         }
 
         &#content {
@@ -139,10 +142,13 @@ header {
         }
     }
 
+    // descriptions
+
     p {
         padding: 10px 50px;
         display: inline-block;
         background: url(../img/zigzag.png) 0 center;
+        display: none;
 
          &:hover {
             -webkit-animation: zigzag 100ms linear infinite;
@@ -154,8 +160,7 @@ header {
 // projects
 
 .projects {
-    float: left;
-    width: 100%;
+    float: right;
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -178,6 +183,14 @@ footer {
     p {
         margin: 0;
     }
+
+    a {
+        color: $accent2;
+
+        &:hover {
+            color: $light;
+        }
+    }
 }
 
 // progress
@@ -190,32 +203,30 @@ footer {
     left: 0;
     height: 100%;
     display: block;
-    opacity: 0.9;
     z-index: 1;
     pointer-events: none;
 
     .progress-bar {
-        background-color: lighten($background, 3%);
+        background-color: lighten($background, 2%);
         width: 0%;
         display: block;
         height: 100%;
-        // transition: all 100ms linear;
     }
 }
 
-// zigzag
+// zigzag keyframe animation
 
 @-webkit-keyframes zigzag {
-  0%   {background-position: 0 center;}
+  0% {background-position: 0 center;}
   100% {background-position: 7px center;}
 }
 
 @keyframes zigzag {
-  0%   {background-position: 0 center;}
+  0% {background-position: 0 center;}
   100% {background-position: 7px center;}
 }
 
-// glitch
+// glitch keyframe animation
 
 .glitch {
     -webkit-animation: glitch 150ms linear;
@@ -223,75 +234,31 @@ footer {
 }
 
 @keyframes glitch {
-    0% {
-        transform: translate(2px, 1px) rotate(0deg);
-    }
-    10% {
-        transform: translate(-1px, -2px) rotate(-1deg);
-    }
-    20% {
-        transform: translate(-3px, 0px) rotate(1deg);
-    }
-    30% {
-        transform: translate(0px, 2px) rotate(0deg);
-    }
-    40% {
-        transform: translate(1px, -1px) rotate(1deg);
-    }
-    50% {
-        transform: translate(-1px, 2px) rotate(-1deg);
-    }
-    60% {
-        transform: translate(-3px, 1px) rotate(0deg);
-    }
-    70% {
-        transform: translate(2px, 1px) rotate(-1deg);
-    }
-    80% {
-        transform: translate(-1px, -1px) rotate(1deg);
-    }
-    90% {
-        transform: translate(2px, 2px) rotate(0deg);
-    }
-    100% {
-        transform: translate(1px, -2px) rotate(-1deg);
-    }
+    0% {transform: translate(2px, 1px) rotate(0deg);}
+    10% {transform: translate(-1px, -2px) rotate(-1deg);}
+    20% {transform: translate(-3px, 0px) rotate(1deg);}
+    30% {transform: translate(0px, 2px) rotate(0deg);}
+    40% {transform: translate(1px, -1px) rotate(1deg);}
+    50% {transform: translate(-1px, 2px) rotate(-1deg);}
+    60% {transform: translate(-3px, 1px) rotate(0deg);}
+    70% {transform: translate(2px, 1px) rotate(-1deg);}
+    80% {transform: translate(-1px, -1px) rotate(1deg);}
+    90% {transform: translate(2px, 2px) rotate(0deg);}
+    100% {transform: translate(1px, -2px) rotate(-1deg);}
 }
 
 @-webkit-keyframes glitch {
-    0% {
-        -webkit-transform: translate(2px, 1px) rotate(0deg);
-    }
-    10% {
-        -webkit-transform: translate(-1px, -2px) rotate(-1deg);
-    }
-    20% {
-        -webkit-transform: translate(-3px, 0px) rotate(1deg);
-    }
-    30% {
-        -webkit-transform: translate(0px, 2px) rotate(0deg);
-    }
-    40% {
-        -webkit-transform: translate(1px, -1px) rotate(1deg);
-    }
-    50% {
-        -webkit-transform: translate(-1px, 2px) rotate(-1deg);
-    }
-    60% {
-        -webkit-transform: translate(-3px, 1px) rotate(0deg);
-    }
-    70% {
-        -webkit-transform: translate(2px, 1px) rotate(-1deg);
-    }
-    80% {
-        -webkit-transform: translate(-1px, -1px) rotate(1deg);
-    }
-    90% {
-        -webkit-transform: translate(2px, 2px) rotate(0deg);
-    }
-    100% {
-        -webkit-transform: translate(1px, -2px) rotate(-1deg);
-    }
+    0% {-webkit-transform: translate(2px, 1px) rotate(0deg);}
+    10% {-webkit-transform: translate(-1px, -2px) rotate(-1deg);}
+    20% {-webkit-transform: translate(-3px, 0px) rotate(1deg);}
+    30% {-webkit-transform: translate(0px, 2px) rotate(0deg);}
+    40% {-webkit-transform: translate(1px, -1px) rotate(1deg);}
+    50% {-webkit-transform: translate(-1px, 2px) rotate(-1deg);}
+    60% {-webkit-transform: translate(-3px, 1px) rotate(0deg);}
+    70% {-webkit-transform: translate(2px, 1px) rotate(-1deg);}
+    80% {-webkit-transform: translate(-1px, -1px) rotate(1deg);}
+    90% {-webkit-transform: translate(2px, 2px) rotate(0deg);}
+    100% {-webkit-transform: translate(1px, -2px) rotate(-1deg);}
 }
 
 // imports

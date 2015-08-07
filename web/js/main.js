@@ -19,13 +19,6 @@ $(document).ready(function() {
     // mousewheel
 
     $('body').on('mousewheel', function(event) {
-        // if(event.deltaY > 0){
-        //     $('#soundtrack')[0].play();
-        //     $('#soundtrack-up')[0].pause();
-        // } else {
-        //     $('#soundtrack')[0].pause();
-        //     $('#soundtrack-up')[0].play();
-        // }
         if(event.deltaY < 0 && $(window).scrollTop() + window.innerHeight === $(document).height()){
             randomLanguage = contentTranslate[Math.floor((Math.random() * contentTranslate.length))];
             $(window).scrollTop(0);
@@ -50,17 +43,17 @@ $(document).ready(function() {
     // glitch
 
     $('body').on('click', function() {
-        var glitchID = Math.floor((Math.random() * 255) + 1);
+        var glitchID = Math.floor((Math.random() * 72) + 1);
         var filename = glitchID.toString();
         for (var i = 2 - glitchID.toString().length; i >= 0; i--) {
             filename = '0' + filename;
         }
-        // $('*').addClass('glitch');
-        // setTimeout(function(){
-        //     $('*').removeClass('glitch');
-        // },150);
+        $('#container').addClass('glitch');
+        setTimeout(function(){
+            $('#container').removeClass('glitch');
+        },150);
         $('#glitch source').remove();
-        $('#glitch')[0].src = 'mp3/GL1-'+ filename +'.mp3';
+        $('#glitch')[0].src = 'mp3/glitch-'+ filename +'.mp3';
         $('#glitch')[0].play();
     });
 
