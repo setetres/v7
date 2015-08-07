@@ -24,18 +24,18 @@ $(document).ready(function() {
             $(window).scrollTop(0);
             rotateDegree -= 360;
             $('.logo').css({transform: 'perspective(1000px) rotateX('+rotateDegree+'deg)'});
-            $('.logo a').text(randomLanguage[1]);
+            $('.logo a').text(randomLanguage[2]);
             setTimeout(function(){
-                $('.description').html(randomLanguage[2]).css({transform: 'perspective(1000px) rotateX('+rotateDegree+'deg)'});
+                $('.description').html(randomLanguage[3]).css({transform: 'perspective(1000px) rotateX('+rotateDegree+'deg)'});
             },200);
         } else if(event.deltaY > 0 && $(window).scrollTop() === 0){
             randomLanguage = contentTranslate[Math.floor((Math.random() * contentTranslate.length))];
             $(window).scrollTop($(document).height() - window.innerHeight);
             rotateDegree += 360;
             $('.logo').css({transform: 'perspective(1000px) rotateX('+rotateDegree+'deg)'});
-            $('.logo a').text(randomLanguage[1]);
+            $('.logo a').text(randomLanguage[2]);
             setTimeout(function(){
-                $('.description').html(randomLanguage[2]).css({transform: 'perspective(1000px) rotateX('+rotateDegree+'deg)'});
+                $('.description').html(randomLanguage[3]).css({transform: 'perspective(1000px) rotateX('+rotateDegree+'deg)'});
             },200);
         }
     });
