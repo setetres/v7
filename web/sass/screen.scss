@@ -194,17 +194,24 @@ header {
             color: $light;
         }
     }
+}
 
-    // description
+.special {
+    margin-top: 100px;
+    padding: 10px 73px 10px 10px;
+    display: inline-block;
+    background: url(../img/zigzag.png) 0 center;
 
-    p {
-        padding: 10px 73px 10px 10px;
-        display: inline-block;
-        background: url(../img/zigzag.png) 0 center;
+    &:hover {
+        -webkit-animation: zigzag 100ms linear infinite;
+        animation: zigzag 100ms linear infinite;
+    }
 
-         &:hover {
-            -webkit-animation: zigzag 100ms linear infinite;
-            animation: zigzag 100ms linear infinite;
+    a {
+        color: $accent2;
+
+        &:hover {
+            color: $white;
         }
     }
 }
@@ -241,18 +248,6 @@ footer {
     width: 100%;
     position: relative;
     overflow: hidden;
-
-    p {
-        margin: 0;
-    }
-
-    a {
-        color: $accent2;
-
-        &:hover {
-            color: $light;
-        }
-    }
 }
 
 // progress
@@ -276,16 +271,11 @@ footer {
     }
 }
 
-// loading keyframe animation
+// glitch
 
-@-webkit-keyframes load-spinner {
-    0% {-webkit-transform: rotate(0deg);}
-    100% {-webkit-transform: rotate(360deg);}
-}
-
-@keyframes load-spinner {
-    0% {transform: rotate(0deg);}
-    100% {transform: rotate(360deg);}
+.glitch {
+    -webkit-animation: glitch 150ms linear;
+    animation: glitch 150ms linear;
 }
 
 // zigzag keyframe animation
@@ -301,11 +291,6 @@ footer {
 }
 
 // glitch keyframe animation
-
-.glitch {
-    -webkit-animation: glitch 150ms linear;
-    animation: glitch 150ms linear;
-}
 
 @keyframes glitch {
     0% {transform: translate(2px, 1px) rotate(0deg);}
