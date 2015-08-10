@@ -148,7 +148,6 @@ header {
         padding: 10px 50px;
         display: inline-block;
         background: url(../img/zigzag.png) 0 center;
-        display: none;
 
          &:hover {
             -webkit-animation: zigzag 100ms linear infinite;
@@ -164,6 +163,10 @@ header {
     margin: 0;
     padding: 0;
     list-style-type: none;
+
+    p {
+        display: none;
+    }
 
     li {
         float: left;
