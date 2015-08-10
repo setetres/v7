@@ -75,7 +75,7 @@ $(document).ready(function() {
     // progress bar
 
     var getMax = function() {
-        return $(document).height() - $(window).height();
+        return $(document).height() - window.innerHeight;
     };
 
     var getValue = function() {
@@ -268,7 +268,7 @@ $(document).ready(function() {
         renderer.setClearColor(0x15191d, 0);
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(screenWidth, screenHeight);
-        renderer.domElement.style.position = 'absolute';
+        renderer.domElement.style.position = 'fixed';
         renderer.domElement.style.top = margin + 'px';
         renderer.domElement.style.left = '0px';
         container.appendChild(renderer.domElement);
