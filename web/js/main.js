@@ -104,6 +104,14 @@ $(document).ready(function() {
         setSizes();
     });
 
+    // load
+
+    $(window).on('load',function(){
+        setTimeout(function(){
+            $('#loading').removeClass('active');
+        },666);
+    });
+
     // threejs
 
     if (!Detector.webgl) {
