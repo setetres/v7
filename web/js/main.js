@@ -1,111 +1,11 @@
-// var Sttrs = {
-//     isMobile : /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
-//     setupUserTip : function(enable){
-//         if(enable) {
-//             Founders.userTipInterval = setInterval(function(){
-//                 $('.navigation-indicator').toggleClass('user-tip');
-//             },1500);
-//         } else {
-//             clearInterval(Founders.userTipInterval);
-//             $('.navigation-indicator').removeClass('user-tip');
-//         }
-//     },
-//     Navigation : {
-//         slideAnimationTime : 900,
-//         mouseWheelInterval : navigator.userAgent.match(/Macintosh/) ? 1200 : 400,
-//         lastMouseWheelAction : 0,
-//         selectedSlide : {
-//             x : 0,
-//             y : 0
-//         },
-//         zoomIn : function() {
-
-//         },
-//         zoomOut : function() {
-
-//         },
-//         onZoomIn : function() {
-
-//         },
-//         onZoomOut : function() {
-
-//         },
-//         setSelectedSlide : function(x, y) {
-
-//         },
-//         initializeMenu : function() {
-
-//         },
-//         updateMenu : function() {
-
-//         },
-//         keyboardObserver : function() {
-//         }
-//     },
-//     setSizes : function() {
-
-//     },
-//     loaded : function() {
-//     },
-//     reload : function() {
-//         var iScroll = Founders.DragManager.iScroll;
-//         for (var i = 0; i < iScroll.length; i++) {
-//             iScroll[i].refresh();
-//         }
-//     },
-//     onDocumentReady : function() {
-//         // if(Founders.isMobile) {
-//         //     $('.modal').css({display: 'block'});
-//         // }
-//         // $('body').on('click', '.bt-zoom.out', function(event) {
-//         //     if(!Founders.isMobile) {
-//         //         Founders.Navigation.zoomOut();
-//         //     } else {
-//         //         $('.modal').addClass('active');
-//         //     }
-//         //     event.preventDefault();
-//         // }).on('click', '.bt-zoom.in', function(event) {
-//         //     Founders.Navigation.zoomIn();
-//         //     event.preventDefault();
-//     }
-// };
-// $(document).ready(Founders.onDocumentReady);
-// $(window).on('load', Founders.loaded);
-
-
-
-
-
-
-
-
-
-
-
-
 $(document).ready(function() {
     'use strict';
 
     var rotateDegree = 0;
 
-    // set sizes
+    // about blank
 
-    function setSizes() {
-        $('#home, footer').css({
-            height: window.innerHeight
-        });
-        $('#content').css({
-            top: window.innerHeight
-        });
-    }
-
-    // window resize
-
-    $(window).on('debouncedresize', function() {
-        setSizes();
-    });
-
-    setSizes();
+    $('a[rel=external]').attr('target', '_blank');
 
     // mousewheel
 
@@ -141,7 +41,7 @@ $(document).ready(function() {
 
     // glitch
 
-    $('body').on('click', function() {
+    function glitch() {
         var glitchID = Math.floor((Math.random() * 72) + 1);
         var filename = glitchID.toString();
         for (var i = 2 - glitchID.toString().length; i >= 0; i--) {
@@ -154,7 +54,25 @@ $(document).ready(function() {
         $('#glitch source').remove();
         $('#glitch')[0].src = 'mp3/glitch-' + filename + '.mp3';
         $('#glitch')[0].play();
+    }
+
+    $('body').on('click', function() {
+        glitch();
     });
+
+    $('.projects a').on('mouseover', function() {
+        glitch();
+    });
+
+    // set sizes
+
+    function setSizes() {
+        $('#home, footer').css({height: window.innerHeight});
+        $('#content').css({top: window.innerHeight});
+    }
+    setSizes();
+
+    // progress bar
 
     var getMax = function() {
         return $(document).height() - $(window).height();
@@ -176,39 +94,19 @@ $(document).ready(function() {
     };
 
     var setWidth = function() {
-        progressBar.css({
-            width: getWidth()
-        });
+        progressBar.css({width: getWidth()});
     };
 
     $(document).on('scroll', setWidth);
     $(window).on('resize', function() {
         max = getMax();
         setWidth();
+        setSizes();
     });
+
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// threejs
 
 if (!Detector.webgl) {
     Detector.addGetWebGLMessage();
@@ -271,9 +169,7 @@ function createShaderMaterial(id, light, ambientLight) {
 
 function generateMaterials() {
     'use strict';
-    // toons
     var hatchingMaterial = createShaderMaterial('hatching', light, ambientLight);
-
     var materials = {
         'hatching': {
             m: hatchingMaterial,
@@ -284,8 +180,6 @@ function generateMaterials() {
     };
     return materials;
 }
-
-
 
 function setupGui() {
     'use strict';
@@ -306,29 +200,24 @@ function setupGui() {
     };
 }
 
-// this controls content of marching cubes voxel field
 function updateCubes(object, time, numblobs) {
     'use strict';
     object.reset();
-    // fill the field with some metaballs
     var i, ballx, bally, ballz, subtract, strength;
     subtract = 12;
     strength = 1.2 / ((Math.sqrt(numblobs) - 1) / 4 + 1);
     for (i = 0; i < numblobs; i++) {
         ballx = Math.sin(i + 1.26 * time * (1.03 + 0.5 * Math.cos(0.21 * i))) * 0.27 + 0.5;
-        bally = Math.abs(Math.cos(i + 1.12 * time * Math.cos(1.22 + 0.1424 * i))) * 0.77; // dip into the floor
+        bally = Math.abs(Math.cos(i + 1.12 * time * Math.cos(1.22 + 0.1424 * i))) * 0.77;
         ballz = Math.cos(i + 1.32 * time * 0.1 * Math.sin((0.92 + 0.53 * i))) * 0.27 + 0.5;
         object.addBall(ballx, bally, ballz, strength, subtract);
     }
 }
 
-
-
 function render() {
     'use strict';
     var delta = clock.getDelta();
     time += delta * effectController.speed * 0.5;
-    // marching cubes
     if (effectController.resolution !== resolution) {
         resolution = effectController.resolution;
         effect.init(resolution);
@@ -337,16 +226,13 @@ function render() {
         effect.isolation = effectController.isolation;
     }
     updateCubes(effect, time, effectController.numBlobs);
-    // materials
     if (effect.material instanceof THREE.ShaderMaterial) {
         effect.material.uniforms.uBaseColor.value.setHex(effectController.hex);
     } else {
         effect.material.color.setHex(effectController.hex);
     }
-    // lights
     light.position.set(effectController.lx, effectController.ly, effectController.lz);
     light.position.normalize();
-    // render
     renderer.clear();
     renderer.render(scene, camera);
 }
@@ -357,25 +243,19 @@ function animate() {
     render();
 }
 
-
 function init() {
     'use strict';
     container = document.getElementById('container');
-    // CAMERA
     camera = new THREE.PerspectiveCamera(45, screenWidth / screenHeight, 1, 10000);
     camera.position.set(-500, 500, 1500);
-    // SCENE
     scene = new THREE.Scene();
-    // LIGHTS
     light = new THREE.DirectionalLight(0xffffff);
     light.position.set(0.5, 0.5, 1);
     scene.add(light);
     ambientLight = new THREE.AmbientLight(0x080808);
     scene.add(ambientLight);
-    // MATERIALS
     materials = generateMaterials();
     current_material = 'hatching';
-    // MARCHING CUBES
     resolution = 28;
     numBlobs = 10;
     effect = new THREE.MarchingCubes(resolution, materials[current_material].m, true, true);
@@ -384,7 +264,6 @@ function init() {
     effect.enableUvs = false;
     effect.enableColors = false;
     scene.add(effect);
-    // RENDERER
     renderer = new THREE.WebGLRenderer({
         alpha: true
     });
@@ -395,13 +274,10 @@ function init() {
     renderer.domElement.style.top = margin + 'px';
     renderer.domElement.style.left = '0px';
     container.appendChild(renderer.domElement);
-    //
     renderer.gammaInput = true;
     renderer.gammaOutput = true;
-    // CONTROLS
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.noZoom = true;
-    // COMPOSER
     renderer.autoClear = false;
     var renderTargetParameters = {
         minFilter: THREE.LinearFilter,
@@ -421,20 +297,14 @@ function init() {
     composer = new THREE.EffectComposer(renderer, renderTarget);
     var renderModel = new THREE.RenderPass(scene, camera);
     vblur.renderToScreen = true;
-    //effectFXAA.renderToScreen = true;
     composer = new THREE.EffectComposer(renderer, renderTarget);
     composer.addPass(renderModel);
     composer.addPass(effectFXAA);
     composer.addPass(hblur);
     composer.addPass(vblur);
-    // GUI
     setupGui();
-    // EVENTS
     window.addEventListener('resize', onWindowResize, false);
 }
-
-
-
 
 init();
 animate();

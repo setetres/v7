@@ -2,7 +2,8 @@
 
 .center,
 .logo,
-.description {
+.description,
+body a {
     transition: all 600ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -48,6 +49,7 @@ body {
 
 // custom colors
 
+$white: #ffffff;
 $background: #15191d;
 $accent: #4b538b;
 $accent2: #7ec8b9;
@@ -88,7 +90,6 @@ header {
     position: fixed;
     z-index: 3;
     top: 0;
-    pointer-events: none;
 
     .logo {
         font-size: 73px;
@@ -97,6 +98,19 @@ header {
         font-weight: normal;
         font-style: italic;
         margin: 100px 0 0 0;
+
+        a {
+            pointer-events: none;
+        }
+    }
+
+    sup {
+        position: relative;
+        top: -17px;
+        font-size: 14px;
+        line-height: 14px;
+        letter-spacing: 0;
+        color: $accent2;
     }
 }
 
@@ -142,10 +156,10 @@ header {
         }
     }
 
-    // descriptions
+    // description
 
     p {
-        padding: 10px 50px;
+        padding: 10px 73px 10px 10px;
         display: inline-block;
         background: url(../img/zigzag.png) 0 center;
 
@@ -164,14 +178,20 @@ header {
     padding: 0;
     list-style-type: none;
 
-    p {
-        display: none;
-    }
-
     li {
         float: left;
         width: 100%;
         text-align: right;
+
+        a {
+            &:hover {
+                color: $white;
+            }
+        }
+
+        p {
+            display: none;
+        }
     }
 }
 
