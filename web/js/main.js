@@ -108,10 +108,11 @@ $(document).ready(function() {
     if (!Detector.webgl) {
         Detector.addGetWebGLMessage();
     }
-    var margin = 0;
-    var time = 0;
+    var margin = 0, time = 0, mouseX = 0, mouseY = 0;
     var screenWidth = window.innerWidth;
     var screenHeight = window.innerHeight;
+    var windowHalfX = window.innerWidth / 2;
+    var windowHalfY = window.innerHeight / 2;
     var clock = new THREE.Clock();
     var ambientLight,
         camera,
@@ -193,6 +194,12 @@ $(document).ready(function() {
         };
     }
 
+    function onDocumentMouseMove( event ) {
+        mouseX = event.clientX - windowHalfX;
+        mouseY = event.clientY - windowHalfY;
+    }
+
+
     function updateCubes(object, time, numblobs) {
         object.reset();
         var i, ballx, bally, ballz, subtract, strength;
@@ -224,6 +231,10 @@ $(document).ready(function() {
         }
         light.position.set(effectController.lx, effectController.ly, effectController.lz);
         light.position.normalize();
+        camera.position.x += ( mouseX - camera.position.x ) * 0.5;
+        camera.position.y += ( - mouseY - camera.position.y ) * 0.5;
+        camera.position.z += ( - mouseY - camera.position.z ) * 0.000005;
+        camera.lookAt( scene.position );
         renderer.clear();
         renderer.render(scene, camera);
     }
@@ -293,6 +304,7 @@ $(document).ready(function() {
         composer.addPass(vblur);
         setupGui();
         window.addEventListener('resize', onWindowResize, false);
+        document.addEventListener('mousemove', onDocumentMouseMove, false);
     }
 
     init();
