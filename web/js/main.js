@@ -179,7 +179,7 @@ $(document).ready(function() {
         effectController = {
             speed: 0.73,
             numBlobs: 27,
-            resolution: 27,
+            resolution: 50,
             isolation: 73,
             hex: '0x4b538b',
             lhue: 0.04,
