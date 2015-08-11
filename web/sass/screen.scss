@@ -127,7 +127,7 @@ header {
     top: 10.55555%;
     padding: 0 12px;
     margin: 0 5.55555%;
-    width: auto;
+    width: 50%;
 
     .logo {
         font-size: 73px;
@@ -361,9 +361,10 @@ footer {
 
 // reponsive
 
-@media screen and (max-width: 719px) {
+@media screen and (max-width: 887px) {
     header {
         position: absolute;
+        width: 100%;
     }
 
     .projects {

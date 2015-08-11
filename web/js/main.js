@@ -59,8 +59,11 @@ $(document).ready(function() {
     // set sizes
 
     function setSizes() {
-        $('#home, footer').css({height: window.innerHeight});
+        $('#home').css({height: window.innerHeight});
         $('#content').css({top: window.innerHeight});
+        if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $('footer').css({height: window.innerHeight});
+        }
     }
     setSizes();
 
