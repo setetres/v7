@@ -245,8 +245,27 @@ header {
         text-align: right;
 
         a {
+            position: relative;
+
+            &:before {
+                content: '';
+                display: block;
+                position: absolute;
+                z-index: 2000;
+                bottom: -10px;
+                left: 0;
+                width: 100%;
+                height: 10px;
+            }
+
             &:hover {
                 color: $white;
+
+                &:before {
+                    background: url(../img/zigzag.png) 0 center;
+                    -webkit-animation: zigzag 100ms linear infinite;
+                    animation: zigzag 100ms linear infinite;
+                }
             }
         }
 
