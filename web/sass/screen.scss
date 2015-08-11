@@ -358,3 +358,26 @@ footer {
 
 @import 'grid.scss';
 @import 'print.scss';
+
+// reponsive
+
+@media screen and (max-width: 719px) {
+    header {
+        position: absolute;
+    }
+
+    .projects {
+        float: left;
+        width: 100%;
+
+        li {
+            text-align: left;
+        }
+
+        .title {
+            font-size: 37px;
+            line-height: 37px;
+            letter-spacing: 0;
+        }
+    }
+}
