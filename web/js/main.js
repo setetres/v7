@@ -47,9 +47,9 @@ $(document).ready(function() {
         for (var i = 2 - glitchID.toString().length; i >= 0; i--) {
             filename = '0' + filename;
         }
-        $('#container').addClass('glitch');
+        $('#threejs').addClass('glitch');
         setTimeout(function() {
-            $('#container').removeClass('glitch');
+            $('#threejs').removeClass('glitch');
         }, 150);
         $('#glitch source').remove();
         $('#glitch')[0].src = 'mp3/glitch-' + filename + '.mp3';
@@ -243,7 +243,7 @@ $(document).ready(function() {
     }
 
     function init() {
-        container = document.getElementById('container');
+        container = document.getElementById('threejs');
         camera = new THREE.PerspectiveCamera(45, screenWidth / screenHeight, 1, 10000);
         camera.position.set(-500, 500, 1500);
         scene = new THREE.Scene();

@@ -85,10 +85,6 @@ body {
     }
 }
 
-.title {
-    font-family: 'Times New Roman';
-}
-
 // loading
 
 #loading {
@@ -128,13 +124,14 @@ body {
 header {
     position: fixed;
     z-index: 4;
-    width: auto;
-    margin: 0 5.55555%;
     top: 10.55555%;
+    padding: 0 12px;
+    margin: 0 5.55555%;
+    width: auto;
 
     .logo {
         font-size: 73px;
-        line-height: 80px;
+        line-height: 100px;
         letter-spacing: -4px;
         font-weight: normal;
         font-style: italic;
@@ -152,6 +149,15 @@ header {
         line-height: 14px;
         letter-spacing: 0;
         color: $accent2;
+    }
+
+    p {
+        line-height: 18px;
+    }
+
+    .logo,
+    p {
+        max-width: 100%;
     }
 }
 
@@ -184,7 +190,7 @@ header {
 
     // title
 
-    h2 {
+    .title {
         font-size: 73px;
         line-height: 73px;
         letter-spacing: -4px;
@@ -197,6 +203,12 @@ header {
         }
     }
 }
+
+.title {
+    font-family: 'Times New Roman';
+}
+
+// versions
 
 .special {
     margin-top: 73px;
@@ -222,9 +234,10 @@ header {
 
 .projects {
     float: right;
-    margin: 0;
-    padding: 0;
+    margin: 0 5.55555%;
+    padding: 0 12px;
     list-style-type: none;
+    width: 50%;
 
     li {
         float: left;
