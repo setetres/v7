@@ -4,7 +4,9 @@
 .logo,
 .description,
 #loading,
-body a {
+header,
+body a,
+.special {
     transition: all 600ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -363,13 +365,23 @@ footer {
 
 @media screen and (max-width: 887px) {
     header {
-        position: absolute;
-        width: 100%;
+        width: auto;
+        top: 10px;
+        right: 0;
+        left: 0;
+        margin: 0;
+        padding: 0 20px;
+    }
+
+    .special {
+        margin-top: 10px;
     }
 
     .projects {
         float: left;
-        width: 100%;
+        width: auto;
+        margin: 0 20px;
+        padding: 0;
 
         li {
             text-align: left;

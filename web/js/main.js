@@ -63,6 +63,8 @@ $(document).ready(function() {
         $('#content').css({top: window.innerHeight});
         if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             $('footer').css({height: window.innerHeight});
+        } else {
+            $('header').css({position: 'absolute'});
         }
     }
     setSizes();
