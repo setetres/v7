@@ -108,13 +108,12 @@ $(document).ready(function() {
     if (!Detector.webgl) {
         Detector.addGetWebGLMessage();
     }
-    var margin = 0, time = 0, mouseX = 0, mouseY = 0;
     var screenWidth = window.innerWidth;
     var screenHeight = window.innerHeight;
-    var windowHalfX = window.innerWidth / 2;
-    var windowHalfY = window.innerHeight / 2;
-    var clock = new THREE.Clock();
-    var ambientLight,
+    var windowHalfX = screenHeight / 2;
+    var windowHalfY = screenWidth / 2;
+    var clock = new THREE.Clock(), margin = 0, time = 0, mouseX = 0, mouseY = 0,
+        ambientLight,
         camera,
         composer,
         container,
