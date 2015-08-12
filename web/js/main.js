@@ -237,7 +237,7 @@ $(document).ready(function() {
         light.position.normalize();
         camera.position.x += ( mouseX - camera.position.x ) * 0.5;
         camera.position.y += ( - mouseY - camera.position.y ) * 0.5;
-        camera.position.z += ( - mouseY - camera.position.z ) * 0.000005;
+        camera.position.z += ( - mouseX - camera.position.z ) * 0.000005;
         camera.lookAt( scene.position );
         renderer.clear();
         renderer.render(scene, camera);
