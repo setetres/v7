@@ -39,10 +39,6 @@ $(document).ready(function() {
         for (var i = 2 - glitchID.toString().length; i >= 0; i--) {
             filename = '0' + filename;
         }
-        $('#threejs').addClass('glitch');
-        setTimeout(function() {
-            $('#threejs').removeClass('glitch');
-        }, 150);
         $('#glitch source').remove();
         $('#glitch')[0].src = 'mp3/glitch-' + filename + '.mp3';
         $('#glitch')[0].play();
@@ -50,10 +46,20 @@ $(document).ready(function() {
 
     $('body').on('click', function() {
         glitch();
+        $('#threejs').addClass('glitch');
+        setTimeout(function() {
+            $('#threejs').removeClass('glitch');
+        }, 150);
     });
 
     $('.projects a').on('mouseover', function() {
         glitch();
+        $(this).addClass('glitch');
+        $('#threejs').addClass('glitch');
+        setTimeout(function() {
+            $('.projects a').removeClass('glitch');
+            $('#threejs').removeClass('glitch');
+        }, 150);
     });
 
     // set sizes
@@ -103,6 +109,7 @@ $(document).ready(function() {
     });
 
     $(window).on('load',function(){
+        $(window).scrollTop(0);
         setTimeout(function(){
             $('#loading').removeClass('active');
         },666);
