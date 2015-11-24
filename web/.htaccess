@@ -11,6 +11,7 @@ Redirect 301 /resume http://docs.google.com/document/d/1EIoI0uGPfIEZyT0nWnaUzBLM
 Redirect 301 /sasstarter http://github.com/setetres/sasstarter
 Redirect 301 /starter http://github.com/setetres/starter
 Redirect 301 /twitter http://twitter.com/setetres
+Redirect 301 /tumblr http://xxxxxxx.ooo
 Redirect 301 /vimeo http://vimeo.com/setetres
 
 ErrorDocument 400 /index.html
