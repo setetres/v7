@@ -13,5 +13,5 @@ License
 [CC-BY-4.0]
 
 [setetres.st]: http://setetres.st
-[http://v7.setetres.st]: http://setetres.st
+[http://v7.setetres.st]: http://v7.setetres.st
 [CC-BY-4.0]: http://creativecommons.org/licenses/by/4.0
