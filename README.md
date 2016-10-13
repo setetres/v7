@@ -3,9 +3,9 @@ v7
 
 v7.0 of my website. [http://v7.setetres.st]
 
-Discontinued Page &#8212; Historical only. Looking for new stuff? Go to [setetres.st].
-
 ![v7](http://files.setetres.st/img/v7-desktop.png?v=1&raw=true)
+
+Discontinued Page &#8212; Historical only. Looking for new stuff? Go to [setetres.st].
 
 License
 -------
