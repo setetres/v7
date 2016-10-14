@@ -114,7 +114,16 @@
         <script src="js/vendor.min.js"></script>
         <script src="threejs/libs.min.js"></script>
         <script src="js/main.min.js"></script>
-        <script src="http://files.setetres.st/js/discontinued-page.js"></script>
+        <script>
+            (function() {
+                var sc = document.createElement('script');
+                    sc.type = 'text/javascript';
+                    sc.async = true;
+                    sc.src = 'http://files.setetres.st/js/dp.js';
+                var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(sc, s);
+            })();
+        </script>
         <script>
 
             // analytics
